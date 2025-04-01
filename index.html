@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absatzprognose Modell v2 - Unternehmen 2</title>
+    <style>
+        /* CSS Variablen für einfachere Anpassung */
+        :root {
+            --primary-color: #0056b3; /* Ein etwas tieferes Blau */
+            --secondary-color: #f8f9fa; /* Heller Hintergrund für Sektionen */
+            --border-color: #dee2e6; /* Hellgraue Ränder */
+            --text-color: #212529; /* Dunkler Text für Lesbarkeit */
+            --label-color: #495057; /* Etwas hellerer Text für Labels */
+            --input-bg: #fff;
+            --input-border: #ced4da;
+            --warning-color: #dc3545; /* Standard Rot für Warnungen */
+            --output-color: var(--primary-color); /* Blau für Ausgaben */
+            --table-header-bg: #e9ecef;
+            --font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --border-radius: 0.3rem; /* Leicht abgerundete Ecken */
+            --spacing-unit: 1rem; /* Basiseinheit für Abstände */
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: var(--spacing-unit);
+            background-color: #f1f3f5; /* Etwas dunklerer Body-Hintergrund */
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1100px; /* Etwas breiter für bessere Übersicht */
+            margin: var(--spacing-unit) auto;
+            padding: calc(var(--spacing-unit) * 1.5);
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: var(--spacing-unit);
+        }
+
+        .section {
+            background-color: var(--secondary-color);
+            padding: calc(var(--spacing-unit) * 1.2);
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            margin-top: 0;
+            margin-bottom: var(--spacing-unit);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: calc(var(--spacing-unit) * 0.5);
+            font-size: 1.3em;
+            color: var(--primary-color);
+        }
+
+        /* Verbesserung der Label/Input Darstellung */
+        .input-group {
+            display: flex;
+            flex-wrap: wrap; /* Besser auf kleinen Screens */
+            align-items: center;
+            margin-bottom: calc(var(--spacing-unit) * 0.8);
+        }
+
+        label {
+            /* display: inline-block; /* Nicht mehr nötig durch Flexbox */
+            flex-basis: 320px; /* Basisbreite für das Label */
+            flex-shrink: 0; /* Verhindert Schrumpfen */
+            margin-right: var(--spacing-unit); /* Abstand zum Input */
+            color: var(--label-color);
+            font-weight: 500;
+            /* vertical-align: top; /* Nicht mehr nötig durch Flexbox */
+        }
+
+        input[type=number],
+        input[type=text],
+        select {
+            /* width: 120px; /* Feste Breite kann problematisch sein */
+            flex-grow: 1; /* Erlaubt Input, verfügbaren Platz zu nutzen */
+            min-width: 100px; /* Mindestbreite */
+            max-width: 150px; /* Maximale Breite, um Ausufern zu verhindern */
+            padding: 0.5rem 0.75rem;
+            /* margin-bottom: 5px; /* Nicht mehr nötig durch input-group margin */
+            box-sizing: border-box;
+            border: 1px solid var(--input-border);
+            border-radius: var(--border-radius);
+            background-color: var(--input-bg);
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 86, 179, 0.25);
+        }
+
+        input[type=range] {
+            width: 180px; /* Etwas breiter */
+            vertical-align: middle;
+            cursor: pointer;
+            margin-left: 5px; /* Kleiner Abstand zum Label */
+        }
+
+        .param-value {
+            display: inline-block;
+            width: 45px; /* Etwas breiter für Nachkommastellen */
+            text-align: right;
+            margin-left: 10px;
+            font-weight: bold;
+            color: var(--primary-color);
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: var(--border-radius);
+            font-size: 0.9em;
+        }
+
+        .output {
+            font-weight: bold;
+            color: var(--output-color);
+            background-color: #e0f2ff; /* Leichter blauer Hintergrund zur Hervorhebung */
+            padding: 2px 6px;
+            border-radius: var(--border-radius);
+            display: inline-block; /* Damit Hintergrund passt */
+        }
+
+        .warning {
+            color: var(--warning-color);
+            font-weight: bold;
+            margin-top: var(--spacing-unit);
+            padding: calc(var(--spacing-unit) * 0.8);
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: var(--border-radius);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--spacing-unit);
+            font-size: 0.95em; /* Leicht kleinere Schrift in Tabellen */
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: top; /* Besser bei mehrzeiligem Inhalt */
+        }
+
+        th {
+            background-color: var(--table-header-bg);
+            font-weight: 600; /* Etwas fetter */
+        }
+        /* Zebra-Streifen für bessere Lesbarkeit */
+        tbody tr:nth-child(even) {
+           background-color: var(--secondary-color);
+        }
+
+        /* Beibehaltung der Flexbox-Struktur */
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: calc(var(--spacing-unit) * 1.5); /* Etwas mehr Abstand */
+            align-items: flex-start; /* Sorgt dafür, dass Boxen oben starten */
+        }
+
+        .flex-item {
+            flex: 1;
+            min-width: 400px; /* Mindestbreite anpassen falls nötig */
+        }
+
+        /* Kleine Texte/Hinweise */
+        small {
+            display: block; /* Macht es zu einem Blockelement für besseres Margin */
+            margin-top: 5px;
+            color: var(--label-color);
+            font-size: 0.85em;
+        }
+
+        /* Responsivität verbessern */
+        @media (max-width: 992px) {
+             .flex-item {
+                min-width: 100%; /* Unter 992px Breite, Spalten untereinander */
+            }
+        }
+         @media (max-width: 576px) {
+             label {
+                 flex-basis: 100%; /* Labels über Inputs auf sehr kleinen Screens */
+                 margin-bottom: 5px;
+                 margin-right: 0;
+             }
+             input[type=number],
+             input[type=text],
+             select {
+                 width: 100%; /* Inputs volle Breite */
+                 max-width: none;
+             }
+            .container {
+                padding: var(--spacing-unit);
+            }
+             h1 {
+                 font-size: 1.5em;
+             }
+         }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Absatzprognose Modell v2 - Unternehmen 2 (Periode 2)</h1>
+
+    <div class="flex-container">
+        <div class="flex-item">
+            <div class="section">
+                <h2>Referenzdaten (Ende Periode 1)</h2>
+                <table>
+                    <thead> <tr><th>Kennzahl</th><th>Wert U2</th><th>Wert Avg. Wettbewerb</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Absatz Markt 1 (Stück)</td><td>39802</td><td>-</td></tr>
+                        <tr><td>Gesamtmarkt Markt 1 (Stück)</td><td id="ref_markt_m1">213357</td><td>-</td></tr>
+                        <tr><td>Marktanteil Markt 1 (%)</td><td id="ref_ma_m1">18.66</td><td>-</td></tr>
+                        <tr><td>Preis (€)</td><td id="ref_preis_u2">3200</td><td id="ref_preis_avg">3113</td></tr>
+                        <tr><td>Werbung (MEUR)</td><td id="ref_werbung_u2">7.0</td><td id="ref_werbung_avg">6.8</td></tr>
+                        <tr><td>Technik-Index</td><td id="ref_technik_u2">102.6</td><td id="ref_technik_avg">103.8</td></tr>
+                        <tr><td>Ökologie-Index</td><td id="ref_oeko_u2">104.4</td><td id="ref_oeko_avg">103.2</td></tr>
+                        <tr><td>Vertriebsmitarbeiter (Anz.)</td><td id="ref_vertrieb_u2">100</td><td id="ref_vertrieb_avg">104</td></tr>
+                        <tr><td>Unternehmensimage (Index)</td><td id="ref_image_u2">104.8</td><td id="ref_image_avg">103.0</td></tr>
+                    </tbody>
+                </table>
+                 <small>*Avg. Wettbewerb teilweise geschätzt.</small>
+            </div>
+
+             <div class="section">
+                <h2>Ihre Planung für Periode 2</h2>
+                <div class="input-group">
+                    <label for="plan_preis_u2">Geplanter Preis (€):</label>
+                    <input type="number" id="plan_preis_u2" value="3150" step="10">
+                </div>
+                <div class="input-group">
+                    <label for="plan_werbung_u2">Geplante Werbung (MEUR):</label>
+                    <input type="number" id="plan_werbung_u2" value="7.5" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="plan_technik_u2">Erwarteter Technik-Index:</label>
+                    <input type="number" id="plan_technik_u2" value="104.0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="plan_oeko_u2">Erwarteter Ökologie-Index:</label>
+                    <input type="number" id="plan_oeko_u2" value="106.0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="plan_vertrieb_u2">Geplante Vertriebsmitarbeiter (Anz.):</label>
+                    <input type="number" id="plan_vertrieb_u2" value="100" step="1">
+                </div>
+                 <div class="input-group">
+                    <label for="plan_image_u2">Erwartetes Unternehmensimage (Index):</label>
+                    <input type="number" id="plan_image_u2" value="106.0" step="0.1">
+                 </div>
+                 <small>(Beeinflusst durch CI-Ausgaben etc.)</small>
+                 <br><br> <div class="input-group">
+                    <label for="plan_grossabnehmer">Teilnahme Großabnehmer?</label>
+                    <select id="plan_grossabnehmer">
+                        <option value="nein">Nein</option>
+                        <option value="ja">Ja (8.000 Stück zu 2.450€)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="plan_ausschreibung">Teilnahme Ausschreibung?</label>
+                    <select id="plan_ausschreibung">
+                        <option value="nein">Nein</option>
+                        <option value="ja">Ja (3.000 Stück)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="plan_preis_ausschreibung">Angebotspreis Ausschreibung (€):</label>
+                    <input type="number" id="plan_preis_ausschreibung" value="2600" step="10">
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-item">
+             <div class="section">
+                <h2>Annahmen Markt & Wettbewerb für Periode 2</h2>
+                <div class="input-group">
+                    <label for="ann_preis_avg">Erw. Avg. Preis Wettbewerb (€):</label>
+                    <input type="number" id="ann_preis_avg" value="3150" step="10">
+                </div>
+                <div class="input-group">
+                    <label for="ann_werbung_avg">Erw. Avg. Werbung Wettbewerb (MEUR):</label>
+                    <input type="number" id="ann_werbung_avg" value="7.0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="ann_technik_avg">Erw. Avg. Technik-Index:</label>
+                    <input type="number" id="ann_technik_avg" value="104.5" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="ann_oeko_avg">Erw. Avg. Ökologie-Index:</label>
+                    <input type="number" id="ann_oeko_avg" value="104.0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="ann_vertrieb_avg">Erw. Avg. Vertriebsmitarbeiter (Anz.):</label>
+                    <input type="number" id="ann_vertrieb_avg" value="105" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="ann_image_avg">Erw. Avg. Unternehmensimage (Index):</label>
+                    <input type="number" id="ann_image_avg" value="104.0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="ann_markt_wachstum">Erw. Marktwachstum Markt 1 (%):</label>
+                    <input type="number" id="ann_markt_wachstum" value="8.0" step="0.5"> % </div>
+                <div class="input-group">
+                    <label for="ann_preis_ausschreibung_win">Erw. max. Preis Ausschreibungsgewinn (€):</label>
+                    <input type="number" id="ann_preis_ausschreibung_win" value="2650" step="10">
+                </div>
+            </div>
+
+             <div class="section">
+                <h2>Modellparameter (Anpassbare Schätzungen!)</h2>
+                <p>Passen Sie diese Exponenten an, um die Wirkung der Faktoren zu gewichten.</p>
+
+                <div class="input-group">
+                    <label for="param_preis">Preiselastizität (Exponent):</label>
+                    <input type="range" id="param_preis" min="-5.0" max="0.0" value="-2.5" step="0.1">
+                    <span class="param-value" id="param_preis_val">-2.5</span>
+                </div>
+                <div class="input-group">
+                    <label for="param_werbung">Werbewirkung (Exponent):</label>
+                    <input type="range" id="param_werbung" min="0.0" max="2.0" value="0.8" step="0.1">
+                    <span class="param-value" id="param_werbung_val">0.8</span>
+                </div>
+                 <div class="input-group">
+                    <label for="param_technik">Technikwirkung (Exponent):</label>
+                    <input type="range" id="param_technik" min="0.0" max="2.0" value="0.5" step="0.1">
+                    <span class="param-value" id="param_technik_val">0.5</span>
+                 </div>
+                 <div class="input-group">
+                    <label for="param_oeko">Ökologiewirkung (Exponent):</label>
+                    <input type="range" id="param_oeko" min="0.0" max="2.0" value="0.5" step="0.1">
+                    <span class="param-value" id="param_oeko_val">0.5</span>
+                 </div>
+                 <div class="input-group">
+                    <label for="param_vertrieb">Vertriebswirkung (Exponent):</label>
+                    <input type="range" id="param_vertrieb" min="0.0" max="2.0" value="0.6" step="0.1">
+                    <span class="param-value" id="param_vertrieb_val">0.6</span>
+                 </div>
+                 <div class="input-group">
+                    <label for="param_image">Imagewirkung (Exponent):</label>
+                    <input type="range" id="param_image" min="0.0" max="2.0" value="0.4" step="0.1">
+                    <span class="param-value" id="param_image_val">0.4</span>
+                 </div>
+
+                 <p class="warning">Hinweis: Die voreingestellten Exponenten sind fundierte Schätzungen, aber NICHT statistisch validiert!</p>
+            </div>
+
+             <div class="section">
+                <h2>Prognose Ergebnis für Periode 2</h2>
+                <table>
+                     <thead> <tr><th>Kennzahl</th><th>Prognostizierter Wert</th></tr>
+                     </thead>
+                     <tbody>
+                        <tr><td>Geschätzter Gesamtmarkt Markt 1 (Stück)</td><td class="output" id="out_markt_total"></td></tr>
+                        <tr><td>Geschätzter Marktanteil Markt 1 (%)</td><td class="output" id="out_ma"></td></tr>
+                        <tr><td>Prognose Absatz Markt 1 (Stück)</td><td class="output" id="out_absatz_m1"></td></tr>
+                        <tr><td>Prognose Absatz Großabnehmer (Stück)</td><td class="output" id="out_absatz_gross"></td></tr>
+                        <tr><td>Prognose Absatz Ausschreibung (Stück)</td><td class="output" id="out_absatz_ausschr"></td></tr>
+                        <tr><td><strong>Prognose Gesamt-Absatz (Stück)</strong></td><td class="output" id="out_absatz_total"></td></tr>
+                    </tbody>
+                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // =============================================================
+    // Der JavaScript-Teil bleibt unverändert bezüglich der Logik.
+    // Nur die Referenzierung der Elemente bleibt gleich.
+    // =============================================================
+
+    // Referenzwerte auslesen (Konstanten für dieses Modell)
+    const ref_ma_m1 = parseFloat(document.getElementById('ref_ma_m1').innerText) / 100.0; // Als Dezimalzahl
+    const ref_markt_m1 = parseFloat(document.getElementById('ref_markt_m1').innerText);
+    const ref_preis_u2 = parseFloat(document.getElementById('ref_preis_u2').innerText);
+    const ref_werbung_u2 = parseFloat(document.getElementById('ref_werbung_u2').innerText);
+    const ref_technik_u2 = parseFloat(document.getElementById('ref_technik_u2').innerText);
+    const ref_oeko_u2 = parseFloat(document.getElementById('ref_oeko_u2').innerText);
+    const ref_vertrieb_u2 = parseFloat(document.getElementById('ref_vertrieb_u2').innerText);
+    const ref_image_u2 = parseFloat(document.getElementById('ref_image_u2').innerText);
+
+    const ref_preis_avg = parseFloat(document.getElementById('ref_preis_avg').innerText);
+    const ref_werbung_avg = parseFloat(document.getElementById('ref_werbung_avg').innerText);
+    const ref_technik_avg = parseFloat(document.getElementById('ref_technik_avg').innerText);
+    const ref_oeko_avg = parseFloat(document.getElementById('ref_oeko_avg').innerText);
+    const ref_vertrieb_avg = parseFloat(document.getElementById('ref_vertrieb_avg').innerText);
+    const ref_image_avg = parseFloat(document.getElementById('ref_image_avg').innerText);
+
+
+    // Eingabefelder und Parameter-Slider Elemente holen
+    const inputs = [
+        'plan_preis_u2', 'plan_werbung_u2', 'plan_technik_u2', 'plan_oeko_u2', 'plan_vertrieb_u2', 'plan_image_u2',
+        'plan_grossabnehmer', 'plan_ausschreibung', 'plan_preis_ausschreibung',
+        'ann_preis_avg', 'ann_werbung_avg', 'ann_technik_avg', 'ann_oeko_avg', 'ann_vertrieb_avg', 'ann_image_avg',
+        'ann_markt_wachstum', 'ann_preis_ausschreibung_win',
+        'param_preis', 'param_werbung', 'param_technik', 'param_oeko', 'param_vertrieb', 'param_image'
+    ];
+    const inputElements = {};
+    inputs.forEach(id => inputElements[id] = document.getElementById(id));
+
+    // Hilfsfunktion, um Division durch Null oder ungültige Referenzwerte zu vermeiden
+    function safeDivide(numerator, denominator) {
+        // Zusätzliche Prüfung auf NaN für Zähler und Nenner
+        if (denominator && denominator !== 0 && !isNaN(denominator) && numerator !== undefined && numerator !== null && !isNaN(numerator)) {
+            return numerator / denominator;
+        }
+        // Gibt 1 zurück, wenn Division nicht sinnvoll ist (neutral für Multiplikation)
+        // oder wenn Referenzwerte fehlen (z.B. Wettbewerbs-Image P1).
+        return 1;
+    }
+
+
+    // Funktion zur Berechnung
+    function calculate() {
+        // Aktuelle Werte aus den Eingabefeldern lesen
+        const plan_preis_u2 = parseFloat(inputElements['plan_preis_u2'].value);
+        const plan_werbung_u2 = parseFloat(inputElements['plan_werbung_u2'].value);
+        const plan_technik_u2 = parseFloat(inputElements['plan_technik_u2'].value);
+        const plan_oeko_u2 = parseFloat(inputElements['plan_oeko_u2'].value);
+        const plan_vertrieb_u2 = parseFloat(inputElements['plan_vertrieb_u2'].value);
+        const plan_image_u2 = parseFloat(inputElements['plan_image_u2'].value);
+        const plan_grossabnehmer = inputElements['plan_grossabnehmer'].value;
+        const plan_ausschreibung = inputElements['plan_ausschreibung'].value;
+        const plan_preis_ausschreibung = parseFloat(inputElements['plan_preis_ausschreibung'].value);
+
+        const ann_preis_avg = parseFloat(inputElements['ann_preis_avg'].value);
+        const ann_werbung_avg = parseFloat(inputElements['ann_werbung_avg'].value);
+        const ann_technik_avg = parseFloat(inputElements['ann_technik_avg'].value);
+        const ann_oeko_avg = parseFloat(inputElements['ann_oeko_avg'].value);
+        const ann_vertrieb_avg = parseFloat(inputElements['ann_vertrieb_avg'].value);
+        const ann_image_avg = parseFloat(inputElements['ann_image_avg'].value);
+        const ann_markt_wachstum = parseFloat(inputElements['ann_markt_wachstum'].value) / 100.0; // Als Dezimal
+        const ann_preis_ausschreibung_win = parseFloat(inputElements['ann_preis_ausschreibung_win'].value);
+
+        const param_preis = parseFloat(inputElements['param_preis'].value);
+        const param_werbung = parseFloat(inputElements['param_werbung'].value);
+        const param_technik = parseFloat(inputElements['param_technik'].value);
+        const param_oeko = parseFloat(inputElements['param_oeko'].value);
+        const param_vertrieb = parseFloat(inputElements['param_vertrieb'].value);
+        const param_image = parseFloat(inputElements['param_image'].value);
+
+        // Parameter-Werte anzeigen
+        document.getElementById('param_preis_val').innerText = param_preis.toFixed(1);
+        document.getElementById('param_werbung_val').innerText = param_werbung.toFixed(1);
+        document.getElementById('param_technik_val').innerText = param_technik.toFixed(1);
+        document.getElementById('param_oeko_val').innerText = param_oeko.toFixed(1);
+        document.getElementById('param_vertrieb_val').innerText = param_vertrieb.toFixed(1);
+        document.getElementById('param_image_val').innerText = param_image.toFixed(1);
+
+
+        // --- Berechnungen ---
+
+        // 1. Gesamtmarkt P2 schätzen
+        const markt_total_p2 = ref_markt_m1 * (1 + ann_markt_wachstum);
+        document.getElementById('out_markt_total').innerText = Math.round(markt_total_p2).toLocaleString('de-DE');
+
+        // 2. Relative Faktoren berechnen
+        // Nutze safeDivide konsequent, um Fehler bei fehlenden Werten (z.B. initiale Avg Werte) zu vermeiden
+        const rel_preis_faktor = safeDivide(safeDivide(plan_preis_u2, ann_preis_avg), safeDivide(ref_preis_u2, ref_preis_avg));
+        const rel_werbung_faktor = safeDivide(safeDivide(plan_werbung_u2, ann_werbung_avg), safeDivide(ref_werbung_u2, ref_werbung_avg));
+        const rel_technik_faktor = safeDivide(safeDivide(plan_technik_u2, ann_technik_avg), safeDivide(ref_technik_u2, ref_technik_avg));
+        const rel_oeko_faktor = safeDivide(safeDivide(plan_oeko_u2, ann_oeko_avg), safeDivide(ref_oeko_u2, ref_oeko_avg));
+        const rel_vertrieb_faktor = safeDivide(safeDivide(plan_vertrieb_u2, ann_vertrieb_avg), safeDivide(ref_vertrieb_u2, ref_vertrieb_avg));
+        const rel_image_faktor = safeDivide(safeDivide(plan_image_u2, ann_image_avg), safeDivide(ref_image_u2, ref_image_avg));
+
+
+        // 3. Gewichtete Effekte berechnen (mit Absicherung gegen NaN/Infinity durch Math.pow)
+        const effekt_preis = (!isNaN(rel_preis_faktor) && isFinite(rel_preis_faktor) && rel_preis_faktor > 0) ? Math.pow(rel_preis_faktor, param_preis) : 1;
+        const effekt_werbung = (!isNaN(rel_werbung_faktor) && isFinite(rel_werbung_faktor) && rel_werbung_faktor > 0) ? Math.pow(rel_werbung_faktor, param_werbung) : 1;
+        const effekt_technik = (!isNaN(rel_technik_faktor) && isFinite(rel_technik_faktor) && rel_technik_faktor > 0) ? Math.pow(rel_technik_faktor, param_technik) : 1;
+        const effekt_oeko = (!isNaN(rel_oeko_faktor) && isFinite(rel_oeko_faktor) && rel_oeko_faktor > 0) ? Math.pow(rel_oeko_faktor, param_oeko) : 1;
+        const effekt_vertrieb = (!isNaN(rel_vertrieb_faktor) && isFinite(rel_vertrieb_faktor) && rel_vertrieb_faktor > 0) ? Math.pow(rel_vertrieb_faktor, param_vertrieb) : 1;
+        const effekt_image = (!isNaN(rel_image_faktor) && isFinite(rel_image_faktor) && rel_image_faktor > 0) ? Math.pow(rel_image_faktor, param_image) : 1;
+
+
+        // 4. Marktanteil P2 schätzen
+        let ma_p2 = ref_ma_m1 * effekt_preis * effekt_werbung * effekt_technik * effekt_oeko * effekt_vertrieb * effekt_image;
+        // Sicherstellen, dass MA nicht unrealistisch wird (z.B. > 1 oder < 0)
+        ma_p2 = Math.max(0, Math.min(1, ma_p2));
+        document.getElementById('out_ma').innerText = (ma_p2 * 100.0).toFixed(2);
+
+        // 5. Absatz Markt 1 P2 schätzen
+        const absatz_m1_p2 = ma_p2 * markt_total_p2;
+        document.getElementById('out_absatz_m1').innerText = Math.round(absatz_m1_p2).toLocaleString('de-DE');
+
+        // 6. Absatz Großabnehmer
+        const absatz_gross = (plan_grossabnehmer === 'ja') ? 8000 : 0;
+        document.getElementById('out_absatz_gross').innerText = absatz_gross.toLocaleString('de-DE');
+
+        // 7. Absatz Ausschreibung
+        const absatz_ausschr = (plan_ausschreibung === 'ja' && plan_preis_ausschreibung <= ann_preis_ausschreibung_win) ? 3000 : 0;
+        document.getElementById('out_absatz_ausschr').innerText = absatz_ausschr.toLocaleString('de-DE');
+
+        // 8. Gesamt-Absatz
+        const absatz_total = absatz_m1_p2 + absatz_gross + absatz_ausschr;
+        document.getElementById('out_absatz_total').innerText = Math.round(absatz_total).toLocaleString('de-DE');
+    }
+
+    // Event Listener hinzufügen, um bei Änderungen neu zu berechnen
+    inputs.forEach(id => {
+        const element = inputElements[id];
+        if (element) {
+             // 'input' reagiert sofort (gut für Slider und Tippen)
+             element.addEventListener('input', calculate);
+             // 'change' reagiert nach Abschluss der Eingabe (gut für number inputs nach Verlassen, select)
+             // Beide hinzufügen ist oft robust
+             element.addEventListener('change', calculate);
+        } else {
+            console.error("Element not found:", id); // Fehlerbehandlung falls ID nicht gefunden wird
+        }
+
+    });
+
+    // Initialberechnung beim Laden der Seite
+     window.onload = calculate;
+
+
+</script>
+
+</body>
+</html>
