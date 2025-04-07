@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absatzprognose Modell v2 - Unternehmen 2</title>
+    <title>Absatzprognose Modell v2 - Unternehmen 2 (Periode 3)</title>
     <style>
         /* CSS Variablen für einfachere Anpassung */
         :root {
@@ -218,117 +218,115 @@
 <body>
 
 <div class="container">
-    <h1>Absatzprognose Modell v2 - Unternehmen 2 (Periode 2)</h1>
+    <h1>Absatzprognose Modell v2 - Unternehmen 2 (Periode 3)</h1>
 
     <div class="flex-container">
         <div class="flex-item">
             <div class="section">
-                <h2>Referenzdaten (Ende Periode 1)</h2>
+                <h2>Referenzdaten (Ende Periode 2)</h2>
                 <table>
                     <thead> <tr><th>Kennzahl</th><th>Wert U2</th><th>Wert Avg. Wettbewerb</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Absatz Markt 1 (Stück)</td><td>39802</td><td>-</td></tr>
-                        <tr><td>Gesamtmarkt Markt 1 (Stück)</td><td id="ref_markt_m1">213357</td><td>-</td></tr>
-                        <tr><td>Marktanteil Markt 1 (%)</td><td id="ref_ma_m1">18.66</td><td>-</td></tr>
-                        <tr><td>Preis (€)</td><td id="ref_preis_u2">3200</td><td id="ref_preis_avg">3113</td></tr>
-                        <tr><td>Werbung (MEUR)</td><td id="ref_werbung_u2">7.0</td><td id="ref_werbung_avg">6.8</td></tr>
-                        <tr><td>Technik-Index</td><td id="ref_technik_u2">102.6</td><td id="ref_technik_avg">103.8</td></tr>
-                        <tr><td>Ökologie-Index</td><td id="ref_oeko_u2">104.4</td><td id="ref_oeko_avg">103.2</td></tr>
-                        <tr><td>Vertriebsmitarbeiter (Anz.)</td><td id="ref_vertrieb_u2">100</td><td id="ref_vertrieb_avg">104</td></tr>
-                        <tr><td>Unternehmensimage (Index)</td><td id="ref_image_u2">104.8</td><td id="ref_image_avg">103.0</td></tr>
+                        <tr><td>Absatz Markt 1 (Stück)</td><td>42801</td><td>-</td></tr>
+                        <tr><td>Gesamtmarkt Markt 1 (Stück)</td><td id="ref_markt_m1">238859</td><td>-</td></tr>
+                        <tr><td>Marktanteil Markt 1 (%)</td><td id="ref_ma_m1">17.92</td><td>-</td></tr>
+                        <tr><td>Preis (€)</td><td id="ref_preis_u2">3125</td><td id="ref_preis_avg">3095</td></tr>
+                        <tr><td>Werbung (MEUR)</td><td id="ref_werbung_u2">7.0</td><td id="ref_werbung_avg">7.9</td></tr>
+                        <tr><td>Technik-Index</td><td id="ref_technik_u2">105.8</td><td id="ref_technik_avg">107.9</td></tr>
+                        <tr><td>Ökologie-Index</td><td id="ref_oeko_u2">107.4</td><td id="ref_oeko_avg">107.4</td></tr>
+                        <tr><td>Vertriebsmitarbeiter (Anz.)</td><td id="ref_vertrieb_u2">121</td><td id="ref_vertrieb_avg">131</td></tr>
+                        <tr><td>Unternehmensimage (Index)</td><td id="ref_image_u2">106.5</td><td id="ref_image_avg">108</td></tr>
                     </tbody>
                 </table>
-                 <small>*Avg. Wettbewerb teilweise geschätzt.</small>
+                 <small>*Avg. Wettbewerb teilweise gerundet.</small>
             </div>
 
              <div class="section">
-                <h2>Ihre Planung für Periode 2</h2>
+                <h2>Ihre Planung für Periode 3</h2>
                 <div class="input-group">
                     <label for="plan_preis_u2">Geplanter Preis (€):</label>
-                    <input type="number" id="plan_preis_u2" value="3150" step="10">
+                    <input type="number" id="plan_preis_u2" value="3125" step="10">
                 </div>
                 <div class="input-group">
                     <label for="plan_werbung_u2">Geplante Werbung (MEUR):</label>
-                    <input type="number" id="plan_werbung_u2" value="7.5" step="0.1">
+                    <input type="number" id="plan_werbung_u2" value="7.0" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="plan_technik_u2">Erwarteter Technik-Index:</label>
-                    <input type="number" id="plan_technik_u2" value="104.0" step="0.1">
+                    <input type="number" id="plan_technik_u2" value="107.0" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="plan_oeko_u2">Erwarteter Ökologie-Index:</label>
-                    <input type="number" id="plan_oeko_u2" value="106.0" step="0.1">
+                    <input type="number" id="plan_oeko_u2" value="108.5" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="plan_vertrieb_u2">Geplante Vertriebsmitarbeiter (Anz.):</label>
-                    <input type="number" id="plan_vertrieb_u2" value="100" step="1">
+                    <input type="number" id="plan_vertrieb_u2" value="121" step="1">
                 </div>
                  <div class="input-group">
                     <label for="plan_image_u2">Erwartetes Unternehmensimage (Index):</label>
-                    <input type="number" id="plan_image_u2" value="106.0" step="0.1">
+                    <input type="number" id="plan_image_u2" value="107.0" step="0.1">
                  </div>
                  <small>(Beeinflusst durch CI-Ausgaben etc.)</small>
-                 <br><br> <div class="input-group">
+                 <br><br>
+                 <div class="input-group">
                     <label for="plan_grossabnehmer">Teilnahme Großabnehmer?</label>
                     <select id="plan_grossabnehmer">
                         <option value="nein">Nein</option>
-                        <option value="ja">Ja (8.000 Stück zu 2.450€)</option>
-                    </select>
+                        <option value="ja">Ja (9.000 Stück zu 2.475€)</option> </select>
                 </div>
                 <div class="input-group">
                     <label for="plan_ausschreibung">Teilnahme Ausschreibung?</label>
                     <select id="plan_ausschreibung">
                         <option value="nein">Nein</option>
-                        <option value="ja">Ja (3.000 Stück)</option>
-                    </select>
+                        <option value="ja">Ja (14.000 Stück)</option> </select>
                 </div>
                 <div class="input-group">
                     <label for="plan_preis_ausschreibung">Angebotspreis Ausschreibung (€):</label>
-                    <input type="number" id="plan_preis_ausschreibung" value="2600" step="10">
+                    <input type="number" id="plan_preis_ausschreibung" value="2800" step="10">
                 </div>
             </div>
         </div>
 
         <div class="flex-item">
              <div class="section">
-                <h2>Annahmen Markt & Wettbewerb für Periode 2</h2>
+                <h2>Annahmen Markt & Wettbewerb für Periode 3</h2>
                 <div class="input-group">
                     <label for="ann_preis_avg">Erw. Avg. Preis Wettbewerb (€):</label>
-                    <input type="number" id="ann_preis_avg" value="3150" step="10">
+                    <input type="number" id="ann_preis_avg" value="3095" step="10">
                 </div>
                 <div class="input-group">
                     <label for="ann_werbung_avg">Erw. Avg. Werbung Wettbewerb (MEUR):</label>
-                    <input type="number" id="ann_werbung_avg" value="7.0" step="0.1">
+                    <input type="number" id="ann_werbung_avg" value="7.9" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="ann_technik_avg">Erw. Avg. Technik-Index:</label>
-                    <input type="number" id="ann_technik_avg" value="104.5" step="0.1">
+                    <input type="number" id="ann_technik_avg" value="109.0" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="ann_oeko_avg">Erw. Avg. Ökologie-Index:</label>
-                    <input type="number" id="ann_oeko_avg" value="104.0" step="0.1">
+                    <input type="number" id="ann_oeko_avg" value="108.5" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="ann_vertrieb_avg">Erw. Avg. Vertriebsmitarbeiter (Anz.):</label>
-                    <input type="number" id="ann_vertrieb_avg" value="105" step="1">
+                    <input type="number" id="ann_vertrieb_avg" value="131" step="1">
                 </div>
                 <div class="input-group">
                     <label for="ann_image_avg">Erw. Avg. Unternehmensimage (Index):</label>
-                    <input type="number" id="ann_image_avg" value="104.0" step="0.1">
+                    <input type="number" id="ann_image_avg" value="108.0" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="ann_markt_wachstum">Erw. Marktwachstum Markt 1 (%):</label>
-                    <input type="number" id="ann_markt_wachstum" value="8.0" step="0.5"> % </div>
+                    <input type="number" id="ann_markt_wachstum" value="3.0" step="0.5"> % </div>
                 <div class="input-group">
                     <label for="ann_preis_ausschreibung_win">Erw. max. Preis Ausschreibungsgewinn (€):</label>
-                    <input type="number" id="ann_preis_ausschreibung_win" value="2650" step="10">
-                </div>
+                    <input type="number" id="ann_preis_ausschreibung_win" value="2850" step="10"> </div>
             </div>
 
              <div class="section">
                 <h2>Modellparameter (Anpassbare Schätzungen!)</h2>
-                <p>Passen Sie diese Exponenten an, um die Wirkung der Faktoren zu gewichten.</p>
+                <p>Passen Sie diese Exponenten an, um die Wirkung der Faktoren zu gewichten. Die Analyse der Perioden 0-2 zeigt, dass diese Standardwerte für P0->P1 gut passten, aber für P1->P2 zu einem stärkeren Marktanteilsverlust geführt hätten als tatsächlich eintrat.</p>
 
                 <div class="input-group">
                     <label for="param_preis">Preiselastizität (Exponent):</label>
@@ -361,11 +359,11 @@
                     <span class="param-value" id="param_image_val">0.4</span>
                  </div>
 
-                 <p class="warning">Hinweis: Die voreingestellten Exponenten sind fundierte Schätzungen, aber NICHT statistisch validiert!</p>
+                 <p class="warning">Hinweis: Die voreingestellten Exponenten sind fundierte Schätzungen, aber NICHT statistisch validiert! Sie scheinen die Entwicklung von P1->P2 nicht perfekt abzubilden.</p>
             </div>
 
              <div class="section">
-                <h2>Prognose Ergebnis für Periode 2</h2>
+                <h2>Prognose Ergebnis für Periode 3</h2>
                 <table>
                      <thead> <tr><th>Kennzahl</th><th>Prognostizierter Wert</th></tr>
                      </thead>
@@ -389,7 +387,7 @@
     // Nur die Referenzierung der Elemente bleibt gleich.
     // =============================================================
 
-    // Referenzwerte auslesen (Konstanten für dieses Modell)
+    // Referenzwerte auslesen (Konstanten für dieses Modell, Ende Periode 2)
     const ref_ma_m1 = parseFloat(document.getElementById('ref_ma_m1').innerText) / 100.0; // Als Dezimalzahl
     const ref_markt_m1 = parseFloat(document.getElementById('ref_markt_m1').innerText);
     const ref_preis_u2 = parseFloat(document.getElementById('ref_preis_u2').innerText);
@@ -426,6 +424,8 @@
         }
         // Gibt 1 zurück, wenn Division nicht sinnvoll ist (neutral für Multiplikation)
         // oder wenn Referenzwerte fehlen (z.B. Wettbewerbs-Image P1).
+        // Auch wenn Zähler NaN ist (z.B. bei leerem Input), wird 1 zurückgegeben.
+        if (isNaN(numerator)) return 1;
         return 1;
     }
 
@@ -470,12 +470,12 @@
 
         // --- Berechnungen ---
 
-        // 1. Gesamtmarkt P2 schätzen
-        const markt_total_p2 = ref_markt_m1 * (1 + ann_markt_wachstum);
-        document.getElementById('out_markt_total').innerText = Math.round(markt_total_p2).toLocaleString('de-DE');
+        // 1. Gesamtmarkt P3 schätzen
+        const markt_total_p3 = ref_markt_m1 * (1 + ann_markt_wachstum);
+        document.getElementById('out_markt_total').innerText = Math.round(markt_total_p3).toLocaleString('de-DE');
 
-        // 2. Relative Faktoren berechnen
-        // Nutze safeDivide konsequent, um Fehler bei fehlenden Werten (z.B. initiale Avg Werte) zu vermeiden
+        // 2. Relative Faktoren berechnen (P3 Plan vs P3 Annahme) / (P2 Ist vs P2 Avg)
+        // Nutze safeDivide konsequent, um Fehler bei fehlenden Werten oder 0/NaN zu vermeiden
         const rel_preis_faktor = safeDivide(safeDivide(plan_preis_u2, ann_preis_avg), safeDivide(ref_preis_u2, ref_preis_avg));
         const rel_werbung_faktor = safeDivide(safeDivide(plan_werbung_u2, ann_werbung_avg), safeDivide(ref_werbung_u2, ref_werbung_avg));
         const rel_technik_faktor = safeDivide(safeDivide(plan_technik_u2, ann_technik_avg), safeDivide(ref_technik_u2, ref_technik_avg));
@@ -493,26 +493,26 @@
         const effekt_image = (!isNaN(rel_image_faktor) && isFinite(rel_image_faktor) && rel_image_faktor > 0) ? Math.pow(rel_image_faktor, param_image) : 1;
 
 
-        // 4. Marktanteil P2 schätzen
-        let ma_p2 = ref_ma_m1 * effekt_preis * effekt_werbung * effekt_technik * effekt_oeko * effekt_vertrieb * effekt_image;
+        // 4. Marktanteil P3 schätzen
+        let ma_p3 = ref_ma_m1 * effekt_preis * effekt_werbung * effekt_technik * effekt_oeko * effekt_vertrieb * effekt_image;
         // Sicherstellen, dass MA nicht unrealistisch wird (z.B. > 1 oder < 0)
-        ma_p2 = Math.max(0, Math.min(1, ma_p2));
-        document.getElementById('out_ma').innerText = (ma_p2 * 100.0).toFixed(2);
+        ma_p3 = Math.max(0, Math.min(1, ma_p3));
+        document.getElementById('out_ma').innerText = (ma_p3 * 100.0).toFixed(2);
 
-        // 5. Absatz Markt 1 P2 schätzen
-        const absatz_m1_p2 = ma_p2 * markt_total_p2;
-        document.getElementById('out_absatz_m1').innerText = Math.round(absatz_m1_p2).toLocaleString('de-DE');
+        // 5. Absatz Markt 1 P3 schätzen
+        const absatz_m1_p3 = ma_p3 * markt_total_p3;
+        document.getElementById('out_absatz_m1').innerText = Math.round(absatz_m1_p3).toLocaleString('de-DE');
 
-        // 6. Absatz Großabnehmer
-        const absatz_gross = (plan_grossabnehmer === 'ja') ? 8000 : 0;
+        // 6. Absatz Großabnehmer P3
+        const absatz_gross = (plan_grossabnehmer === 'ja') ? 9000 : 0; // Updated P3 quantity
         document.getElementById('out_absatz_gross').innerText = absatz_gross.toLocaleString('de-DE');
 
-        // 7. Absatz Ausschreibung
-        const absatz_ausschr = (plan_ausschreibung === 'ja' && plan_preis_ausschreibung <= ann_preis_ausschreibung_win) ? 3000 : 0;
+        // 7. Absatz Ausschreibung P3
+        const absatz_ausschr = (plan_ausschreibung === 'ja' && plan_preis_ausschreibung <= ann_preis_ausschreibung_win) ? 14000 : 0; // Updated P3 quantity
         document.getElementById('out_absatz_ausschr').innerText = absatz_ausschr.toLocaleString('de-DE');
 
-        // 8. Gesamt-Absatz
-        const absatz_total = absatz_m1_p2 + absatz_gross + absatz_ausschr;
+        // 8. Gesamt-Absatz P3
+        const absatz_total = absatz_m1_p3 + absatz_gross + absatz_ausschr;
         document.getElementById('out_absatz_total').innerText = Math.round(absatz_total).toLocaleString('de-DE');
     }
 
