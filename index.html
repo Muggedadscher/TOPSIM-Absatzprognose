@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absatzprognose Modell v2 - Unternehmen 2 (Periode 4)</title>
+    <title>Absatzprognose Modell v2 - Unternehmen 2 (Periode 5)</title>
     <style>
         /* CSS Variablen für einfachere Anpassung */
         :root {
@@ -142,6 +142,16 @@
             border: 1px solid #f5c6cb;
             border-radius: var(--border-radius);
         }
+         .critical-warning {
+            color: #721c24; /* Dunkleres Rot */
+            font-weight: bold;
+            margin-top: var(--spacing-unit);
+             margin-bottom: var(--spacing-unit);
+            padding: calc(var(--spacing-unit) * 1);
+            background-color: #f5c6cb; /* Helleres Rot */
+            border: 1px solid #f1b0b7;
+            border-radius: var(--border-radius);
+         }
 
         table {
             width: 100%;
@@ -183,6 +193,7 @@
         small {
             display: block; /* Macht es zu einem Blockelement für besseres Margin */
             margin-top: 5px;
+             margin-left: 5px; /* Einzug für Lesbarkeit */
             color: var(--label-color);
             font-size: 0.85em;
         }
@@ -218,86 +229,92 @@
 <body>
 
 <div class="container">
-    <h1>Absatzprognose Modell v2 - Unternehmen 2 (Periode 4)</h1>
+    <h1>Absatzprognose Modell v2 - Unternehmen 2 (Periode 5)</h1>
+
+     <p class="critical-warning">
+        <strong>ACHTUNG:</strong> Dieses Modell wurde für COPY I-alt kalibriert. Unternehmen 2 hat in Periode 4 COPY I-neu eingeführt. Die Referenzdaten (Indizes) beziehen sich teilweise auf das neue Produkt. Das Modell kann die Effekte des neuen Produkts und von Markt 2 nicht korrekt abbilden. Die Prognose für Periode 5 ist daher **höchst unsicher** und dient nur als grober Anhaltspunkt unter Verwendung der alten Modellstruktur! Eine Überarbeitung/Neuentwicklung des Modells ist dringend empfohlen.
+    </p>
 
     <div class="flex-container">
         <div class="flex-item">
             <div class="section">
-                <h2>Referenzdaten (Ende Periode 3)</h2>
+                <h2>Referenzdaten (Ende Periode 4)</h2>
                 <table>
                     <thead> <tr><th>Kennzahl</th><th>Wert U2</th><th>Wert Avg. Wettbewerb</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Absatz Markt 1 (Stück)</td><td>46572</td><td>-</td></tr>
-                        <tr><td>Gesamtmarkt Markt 1 (Stück)</td><td id="ref_markt_m1">258675</td><td>-</td></tr>
-                        <tr><td>Marktanteil Markt 1 (%)</td><td id="ref_ma_m1">18.00</td><td>-</td></tr>
-                        <tr><td>Preis (€)</td><td id="ref_preis_u2">3125</td><td id="ref_preis_avg">3092</td></tr>
-                        <tr><td>Werbung (MEUR)</td><td id="ref_werbung_u2">12.0</td><td id="ref_werbung_avg">8.9</td></tr>
-                        <tr><td>Technik-Index</td><td id="ref_technik_u2">107.4</td><td id="ref_technik_avg">107.4</td></tr>
-                        <tr><td>Ökologie-Index</td><td id="ref_oeko_u2">105.8</td><td id="ref_oeko_avg">107.9</td></tr>
-                        <tr><td>Vertriebsmitarbeiter (Anz.)</td><td id="ref_vertrieb_u2">121</td><td id="ref_vertrieb_avg">143</td></tr>
-                        <tr><td>Unternehmensimage (Index)</td><td id="ref_image_u2">108.8</td><td id="ref_image_avg">110</td></tr>
+                        <tr><td>Absatz Markt 1 (Stück)</td><td>38907</td><td>-</td></tr>
+                        <tr><td>Gesamtmarkt Markt 1 (Stück)</td><td id="ref_markt_m1">249270</td><td>-</td></tr>
+                        <tr><td>Marktanteil Markt 1 (%)</td><td id="ref_ma_m1">15.61</td><td>-</td></tr>
+                        <tr><td>Preis (€)</td><td id="ref_preis_u2">3050</td><td id="ref_preis_avg">3057</td></tr>
+                        <tr><td>Werbung (MEUR)</td><td id="ref_werbung_u2">8.0</td><td id="ref_werbung_avg">8.9</td></tr>
+                        <tr><td>Technik-Index</td><td id="ref_technik_u2">109.3</td><td id="ref_technik_avg">113.1</td></tr>
+                        <tr><td>Ökologie-Index</td><td id="ref_oeko_u2">111.5</td><td id="ref_oeko_avg">111.7</td></tr>
+                        <tr><td>Vertriebsmitarbeiter (Anz.)</td><td id="ref_vertrieb_u2">122</td><td id="ref_vertrieb_avg">157</td></tr>
+                        <tr><td>Unternehmensimage (Index)</td><td id="ref_image_u2">119.3</td><td id="ref_image_avg">114</td></tr>
                     </tbody>
                 </table>
-                 <small>*Avg. Wettbewerb teilweise gerundet.</small>
+                 <small>*Avg. Wettbewerb gerundet. U2 Indizes von COPY I-neu.</small>
             </div>
 
              <div class="section">
-                <h2>Ihre Planung für Periode 4</h2>
+                <h2>Ihre Planung für Periode 5</h2>
+                 <small><strong>Achtung:</strong> Planung hier primär für Markt 1 / COPY I-neu relevant, Modell rechnet aber mit alter Logik!</small>
                 <div class="input-group">
-                    <label for="plan_preis_u2">Geplanter Preis (€):</label>
-                    <input type="number" id="plan_preis_u2" value="3125" step="10">
+                    <label for="plan_preis_u2">Geplanter Preis (€, Markt 1):</label>
+                    <input type="number" id="plan_preis_u2" value="3050" step="10">
                 </div>
                 <div class="input-group">
-                    <label for="plan_werbung_u2">Geplante Werbung (MEUR):</label>
-                    <input type="number" id="plan_werbung_u2" value="10.0" step="0.1">
+                    <label for="plan_werbung_u2">Geplante Werbung (MEUR, Markt 1):</label>
+                    <input type="number" id="plan_werbung_u2" value="8.0" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="plan_technik_u2">Erwarteter Technik-Index:</label>
-                    <input type="number" id="plan_technik_u2" value="108.0" step="0.1">
-                     <small>(COPY I-alt)</small>
+                    <input type="number" id="plan_technik_u2" value="110.0" step="0.1">
+                     <small>(COPY I-neu)</small>
                 </div>
                 <div class="input-group">
                     <label for="plan_oeko_u2">Erwarteter Ökologie-Index:</label>
-                    <input type="number" id="plan_oeko_u2" value="107.0" step="0.1">
-                     <small>(COPY I-alt)</small>
+                    <input type="number" id="plan_oeko_u2" value="112.0" step="0.1">
+                      <small>(COPY I-neu)</small>
                 </div>
                 <div class="input-group">
-                    <label for="plan_vertrieb_u2">Geplante Vertriebsmitarbeiter (Anz.):</label>
+                    <label for="plan_vertrieb_u2">Geplante Vertriebsmitarbeiter (Anz., Gesamt):</label>
                     <input type="number" id="plan_vertrieb_u2" value="130" step="1">
+                     <small>(Annahme für M1 relevant)</small>
                 </div>
                  <div class="input-group">
                     <label for="plan_image_u2">Erwartetes Unternehmensimage (Index):</label>
-                    <input type="number" id="plan_image_u2" value="109.0" step="0.1">
+                    <input type="number" id="plan_image_u2" value="120.0" step="0.1">
                  </div>
                  <small>(Beeinflusst durch CI-Ausgaben etc.)</small>
                  <br><br>
                  <div class="input-group">
                     <label for="plan_grossabnehmer">Teilnahme Großabnehmer?</label>
                     <select id="plan_grossabnehmer">
-                        <option value="nein">Nein</option>
-                        <option value="ja" selected>Ja (7.000 Stück zu 2.650€)</option> </select>
+                        <option value="nein" selected>Nein</option>
+                        </select>
                 </div>
                 <div class="input-group">
                     <label for="plan_ausschreibung">Teilnahme Ausschreibung?</label>
                     <select id="plan_ausschreibung">
-                        <option value="nein">Nein</option>
-                        <option value="ja" selected>Ja (9.000 Stück)</option> </select>
+                        <option value="nein" selected>Nein</option>
+                         <option value="ja">Ja (50 Stück)</option> </select>
                 </div>
                 <div class="input-group">
                     <label for="plan_preis_ausschreibung">Angebotspreis Ausschreibung (€):</label>
-                    <input type="number" id="plan_preis_ausschreibung" value="2500" step="10">
+                    <input type="number" id="plan_preis_ausschreibung" value="2400" step="10">
                 </div>
-                 <small>Hinweis: Modell berücksichtigt noch keine Markteinführung von COPY I-neu oder Markt 2.</small>
             </div>
         </div>
 
         <div class="flex-item">
              <div class="section">
-                <h2>Annahmen Markt & Wettbewerb für Periode 4</h2>
+                <h2>Annahmen Markt & Wettbewerb für Periode 5</h2>
+                 <small><strong>Achtung:</strong> Annahmen hier für Markt 1!</small>
                 <div class="input-group">
                     <label for="ann_preis_avg">Erw. Avg. Preis Wettbewerb (€):</label>
-                    <input type="number" id="ann_preis_avg" value="3080" step="10">
+                    <input type="number" id="ann_preis_avg" value="3057" step="10">
                 </div>
                 <div class="input-group">
                     <label for="ann_werbung_avg">Erw. Avg. Werbung Wettbewerb (MEUR):</label>
@@ -305,32 +322,33 @@
                 </div>
                 <div class="input-group">
                     <label for="ann_technik_avg">Erw. Avg. Technik-Index:</label>
-                    <input type="number" id="ann_technik_avg" value="108.5" step="0.1">
+                    <input type="number" id="ann_technik_avg" value="114.0" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="ann_oeko_avg">Erw. Avg. Ökologie-Index:</label>
-                    <input type="number" id="ann_oeko_avg" value="109.0" step="0.1">
+                    <input type="number" id="ann_oeko_avg" value="112.5" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="ann_vertrieb_avg">Erw. Avg. Vertriebsmitarbeiter (Anz.):</label>
-                    <input type="number" id="ann_vertrieb_avg" value="145" step="1">
+                    <input type="number" id="ann_vertrieb_avg" value="157" step="1">
                 </div>
                 <div class="input-group">
                     <label for="ann_image_avg">Erw. Avg. Unternehmensimage (Index):</label>
-                    <input type="number" id="ann_image_avg" value="110.0" step="0.1">
+                    <input type="number" id="ann_image_avg" value="114.0" step="0.1">
                 </div>
                 <div class="input-group">
                     <label for="ann_markt_wachstum">Erw. Marktwachstum Markt 1 (%):</label>
-                    <input type="number" id="ann_markt_wachstum" value="-10.0" step="0.5"> % </div>
+                    <input type="number" id="ann_markt_wachstum" value="-0.3" step="0.1"> % <small>(Gesamtmarkt. Spezifischer COPY I Rückgang hier nicht modelliert!)</small>
+                </div>
                 <div class="input-group">
                     <label for="ann_preis_ausschreibung_win">Erw. max. Preis Ausschreibungsgewinn (€):</label>
-                    <input type="number" id="ann_preis_ausschreibung_win" value="2550" step="10"> </div>
+                    <input type="number" id="ann_preis_ausschreibung_win" value="2450" step="10"> </div>
                  <small>Markt 2 Annahmen hier nicht modelliert.</small>
             </div>
 
              <div class="section">
                 <h2>Modellparameter (Angepasste Schätzungen!)</h2>
-                <p>Die Exponenten wurden basierend auf der Analyse der Perioden 0-3 angepasst, um die historische Entwicklung besser abzubilden. Insbesondere die Werbewirkung wurde reduziert.</p>
+                <p>Die Exponenten wurden basierend auf der Analyse der Perioden 0-3 für <strong>COPY I-alt</strong> angepasst. Ihre Gültigkeit für P5 mit <strong>COPY I-neu</strong> ist fraglich!</p>
 
                 <div class="input-group">
                     <label for="param_preis">Preiselastizität (Exponent):</label>
@@ -358,11 +376,12 @@
                     <input type="range" id="param_image" min="0.0" max="2.0" value="0.3" step="0.1"> <span class="param-value" id="param_image_val">0.3</span>
                  </div>
 
-                 <p class="warning">Hinweis: Die angepassten Exponenten sind Schätzungen basierend auf bisherigen Daten, aber immer noch NICHT statistisch validiert! Zukünftige Abweichungen sind möglich.</p>
+                 <p class="warning">Hinweis: Die angepassten Exponenten sind Schätzungen basierend auf historischen Daten von COPY I-alt! Ihre Anwendbarkeit auf COPY I-neu ist unsicher.</p>
             </div>
 
              <div class="section">
-                <h2>Prognose Ergebnis für Periode 4 (Markt 1)</h2>
+                <h2>Prognose Ergebnis für Periode 5 (Markt 1)</h2>
+                 <small><strong>Achtung:</strong> Sehr unsichere Prognose aufgrund Produktwechsels!</small>
                 <table>
                      <thead> <tr><th>Kennzahl</th><th>Prognostizierter Wert</th></tr>
                      </thead>
@@ -387,13 +406,13 @@
     // Nur die Referenzierung der Elemente bleibt gleich.
     // =============================================================
 
-    // Referenzwerte auslesen (Konstanten für dieses Modell, Ende Periode 3)
+    // Referenzwerte auslesen (Konstanten für dieses Modell, Ende Periode 4)
     const ref_ma_m1 = parseFloat(document.getElementById('ref_ma_m1').innerText) / 100.0; // Als Dezimalzahl
     const ref_markt_m1 = parseFloat(document.getElementById('ref_markt_m1').innerText);
     const ref_preis_u2 = parseFloat(document.getElementById('ref_preis_u2').innerText);
     const ref_werbung_u2 = parseFloat(document.getElementById('ref_werbung_u2').innerText);
-    const ref_technik_u2 = parseFloat(document.getElementById('ref_technik_u2').innerText);
-    const ref_oeko_u2 = parseFloat(document.getElementById('ref_oeko_u2').innerText);
+    const ref_technik_u2 = parseFloat(document.getElementById('ref_technik_u2').innerText); // Index von P4 (COPY I-neu)
+    const ref_oeko_u2 = parseFloat(document.getElementById('ref_oeko_u2').innerText);     // Index von P4 (COPY I-neu)
     const ref_vertrieb_u2 = parseFloat(document.getElementById('ref_vertrieb_u2').innerText);
     const ref_image_u2 = parseFloat(document.getElementById('ref_image_u2').innerText);
 
@@ -435,8 +454,8 @@
         // Aktuelle Werte aus den Eingabefeldern lesen
         const plan_preis_u2 = parseFloat(inputElements['plan_preis_u2'].value);
         const plan_werbung_u2 = parseFloat(inputElements['plan_werbung_u2'].value);
-        const plan_technik_u2 = parseFloat(inputElements['plan_technik_u2'].value);
-        const plan_oeko_u2 = parseFloat(inputElements['plan_oeko_u2'].value);
+        const plan_technik_u2 = parseFloat(inputElements['plan_technik_u2'].value); // P5 Plan (neu)
+        const plan_oeko_u2 = parseFloat(inputElements['plan_oeko_u2'].value);     // P5 Plan (neu)
         const plan_vertrieb_u2 = parseFloat(inputElements['plan_vertrieb_u2'].value);
         const plan_image_u2 = parseFloat(inputElements['plan_image_u2'].value);
         const plan_grossabnehmer = inputElements['plan_grossabnehmer'].value;
@@ -470,12 +489,15 @@
 
         // --- Berechnungen ---
 
-        // 1. Gesamtmarkt P4 schätzen
-        const markt_total_p4 = ref_markt_m1 * (1 + ann_markt_wachstum);
-        document.getElementById('out_markt_total').innerText = Math.round(markt_total_p4).toLocaleString('de-DE');
+        // 1. Gesamtmarkt P5 schätzen
+        const markt_total_p5 = ref_markt_m1 * (1 + ann_markt_wachstum);
+        document.getElementById('out_markt_total').innerText = Math.round(markt_total_p5).toLocaleString('de-DE');
 
-        // 2. Relative Faktoren berechnen (P4 Plan vs P4 Annahme) / (P3 Ist vs P3 Avg)
-        // Nutze safeDivide konsequent, um Fehler bei fehlenden Werten oder 0/NaN zu vermeiden
+        // 2. Relative Faktoren berechnen (P5 Plan vs P5 Annahme) / (P4 Ist vs P4 Avg)
+        // ACHTUNG: Die Referenz-Indizes (ref_technik_u2, ref_oeko_u2) stammen aus P4 (COPY I-neu),
+        // die Plan-Indizes (plan_technik_u2, plan_oeko_u2) sind für P5 (COPY I-neu).
+        // Das Modell verwendet diese Werte, aber die Interpretation ist schwierig, da die Exponenten
+        // auf Basis von COPY I-alt geschätzt wurden!
         const rel_preis_faktor = safeDivide(safeDivide(plan_preis_u2, ann_preis_avg), safeDivide(ref_preis_u2, ref_preis_avg));
         const rel_werbung_faktor = safeDivide(safeDivide(plan_werbung_u2, ann_werbung_avg), safeDivide(ref_werbung_u2, ref_werbung_avg));
         const rel_technik_faktor = safeDivide(safeDivide(plan_technik_u2, ann_technik_avg), safeDivide(ref_technik_u2, ref_technik_avg));
@@ -493,26 +515,26 @@
         const effekt_image = (!isNaN(rel_image_faktor) && isFinite(rel_image_faktor) && rel_image_faktor > 0) ? Math.pow(rel_image_faktor, param_image) : 1;
 
 
-        // 4. Marktanteil P4 schätzen
-        let ma_p4 = ref_ma_m1 * effekt_preis * effekt_werbung * effekt_technik * effekt_oeko * effekt_vertrieb * effekt_image;
+        // 4. Marktanteil P5 schätzen (SEHR UNSICHER!)
+        let ma_p5 = ref_ma_m1 * effekt_preis * effekt_werbung * effekt_technik * effekt_oeko * effekt_vertrieb * effekt_image;
         // Sicherstellen, dass MA nicht unrealistisch wird (z.B. > 1 oder < 0)
-        ma_p4 = Math.max(0, Math.min(1, ma_p4));
-        document.getElementById('out_ma').innerText = (ma_p4 * 100.0).toFixed(2);
+        ma_p5 = Math.max(0, Math.min(1, ma_p5));
+        document.getElementById('out_ma').innerText = (ma_p5 * 100.0).toFixed(2);
 
-        // 5. Absatz Markt 1 P4 schätzen
-        const absatz_m1_p4 = ma_p4 * markt_total_p4;
-        document.getElementById('out_absatz_m1').innerText = Math.round(absatz_m1_p4).toLocaleString('de-DE');
+        // 5. Absatz Markt 1 P5 schätzen (SEHR UNSICHER!)
+        const absatz_m1_p5 = ma_p5 * markt_total_p5;
+        document.getElementById('out_absatz_m1').innerText = Math.round(absatz_m1_p5).toLocaleString('de-DE');
 
-        // 6. Absatz Großabnehmer P4
-        const absatz_gross = (plan_grossabnehmer === 'ja') ? 7000 : 0; // Updated P4 quantity
+        // 6. Absatz Großabnehmer P5
+        const absatz_gross = (plan_grossabnehmer === 'ja') ? 0 : 0; // Kein GA in P5
         document.getElementById('out_absatz_gross').innerText = absatz_gross.toLocaleString('de-DE');
 
-        // 7. Absatz Ausschreibung P4
-        const absatz_ausschr = (plan_ausschreibung === 'ja' && plan_preis_ausschreibung <= ann_preis_ausschreibung_win) ? 9000 : 0; // Updated P4 quantity
+        // 7. Absatz Ausschreibung P5
+        const absatz_ausschr = (plan_ausschreibung === 'ja' && plan_preis_ausschreibung <= ann_preis_ausschreibung_win) ? 50 : 0; // Mini-Ausschreibung P5
         document.getElementById('out_absatz_ausschr').innerText = absatz_ausschr.toLocaleString('de-DE');
 
-        // 8. Gesamt-Absatz P4 (Markt 1 + GA + Ausschreibung)
-        const absatz_total = absatz_m1_p4 + absatz_gross + absatz_ausschr;
+        // 8. Gesamt-Absatz P5 (Markt 1 + GA + Ausschreibung) (SEHR UNSICHER!)
+        const absatz_total = absatz_m1_p5 + absatz_gross + absatz_ausschr;
         document.getElementById('out_absatz_total').innerText = Math.round(absatz_total).toLocaleString('de-DE');
     }
 
